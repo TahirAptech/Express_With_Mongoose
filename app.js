@@ -67,7 +67,7 @@ app.put('/api/user', (req, res) => {
 });
 
 app.delete('/api/user', (req, res) => {
-    usermodal.deleteMany({ fname: "Oniba", lname: "Shaukat" })
+    usermodal.deleteMany({ fname: "Tahir", lname: "Mahmood" })
         .then(
             res.send("Record Deleted.")
         )
