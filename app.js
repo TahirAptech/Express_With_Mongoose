@@ -1,5 +1,4 @@
 const express = require('express');
-const res = require('express/lib/response');
 const app = express();
 const usermodal = require('./models/user');
 const mongoose = require('mongoose');
@@ -74,7 +73,6 @@ app.delete('/api/user', (req, res) => {
         )
         .catch(err => res.send("Error: " + err));
 });
-
 
 
 app.all('*', (req, res) => {
