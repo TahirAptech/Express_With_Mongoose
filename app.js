@@ -9,8 +9,7 @@ mongoose.connect(`mongodb+srv://admin:${Password}@cluster0.66qn3.mongodb.net/${D
     .then(() => { console.log("Database Connection Succesful.") }).catch(error => console.log(error));
 
 //#region middlewares, run first.
-//Body Allow - Json Body Parser.
-app.use(express.json());
+app.use(express.json()); //Body Allow <- Json Body Parser.
 app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
     if (false) {
@@ -36,12 +35,12 @@ app.get('/api/user', (req, res) => {
 //Get User By Id.
 app.get('/api/userById', (req, res) => {
     let id = req.query.id;
-    usermodal.findById(id, (err, records) => {
+    usermodal.findById(id, (err, obj) => {
         if (err) {
             res.send("Error: " + err);
         }
         else {
-            res.send(records);
+            res.send(obj);
         }
     });
 });
@@ -54,13 +53,17 @@ app.post('/api/user', (req, res) => {
 });
 
 app.put('/api/user', (req, res) => {
+    debugger
     const obj = req.body;
-    usermodal.updateOne({ fname: "Areesha" }, obj, (err, docs) => {
+    const id = req.query.id;
+    usermodal.updateOne({ _id: id }, obj, (err, docs) => {
         if (err) {
             res.send("Update Error: " + err);
         }
         else {
-            res.send(obj);
+            usermodal.findById(id, (err, obj) => { 
+                res.send(obj);
+            })
         }
     });
 });
