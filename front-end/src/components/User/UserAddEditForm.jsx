@@ -26,16 +26,23 @@ const UserAddEditForm = ({ id }) => {
 
   const SubmitForm = (e) => {
     e.preventDefault();
+    let msg = '';
     const user = { fname, lname, email, cource, salary };
     if (id) {
       dispatch(updateUser(id, user));
-      alert('Record updated!')
+      msg = 'Record updated!';
 
     }
     else {
       dispatch(addNewUser(user));
-      alert('Record inserted.')
+      msg = 'Record inserted.';
     }
+    setfname('');
+    setlname('');
+    setemail('');
+    setcourse('');
+    setsalary('');
+    alert(msg);
   }
 
   return (
