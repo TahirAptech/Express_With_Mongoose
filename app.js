@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();
 const usermodal = require('./models/user');
 const mongoose = require('mongoose');
+var cors = require('cors');
+app.use(cors()) // Use this after the variable declaration
 
 const DB_Name = "userdb";
 const Password = "admin";
 mongoose.connect(`mongodb+srv://admin:${Password}@cluster0.66qn3.mongodb.net/${DB_Name}?retryWrites=true&w=majority`)
-    .then(() => { console.log("Database Connection Succesful.") }).catch(error => console.log(error));
+    .then(() => { console.log("Database Connection Succesfull.") }).catch(error => console.log(error));
 
 //#region middlewares, run first.
 app.use(express.json()); //Body Allow <- Json Body Parser.
@@ -22,7 +24,7 @@ app.use((req, res, next) => {
 //#endregion
 
 app.get('/api/user', (req, res) => {
-    usermodal.find({}, (err, records) => {
+    usermodal.find({}, { __v: 0}, (err, records) => {
         if (err) {
             res.send("Error: " + err);
         }
@@ -61,7 +63,7 @@ app.put('/api/user', (req, res) => {
             res.send("Update Error: " + err);
         }
         else {
-            usermodal.findById(id, (err, obj) => { 
+            usermodal.findById(id, (err, obj) => {
                 res.send(obj);
             })
         }
@@ -82,7 +84,7 @@ app.all('*', (req, res) => {
     res.send('Sorry Wrong URL');
 })
 
-app.listen(process.env.PORT || 300, () => console.log('Server is running..'));
+app.listen(process.env.PORT || 9000, () => console.log('Server is running..'));
 
 
 
