@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import UserAddEditForm from './components/User/UserAddEditForm'
+import SignUp from './components/User/SignUp';
 import UserList from './components/User/UserList'
 import { getUsers } from './store/actions/userAction';
 
 const App = () => {
   const dispatch = useDispatch();
-  let [uid, setuid] = useState('');
+  let [uid, setuid] = useState({});
 
   useEffect(() => {
     dispatch(getUsers());
@@ -14,8 +14,8 @@ const App = () => {
 
   return (
     <div>
-      <UserAddEditForm id={uid} />
-      <UserList setUserId={setuid}/>
+      <SignUp userObj={uid} setUserId={setuid} />
+      <UserList setUserId={setuid} />
     </div>
   )
 }
